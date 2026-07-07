@@ -1,9 +1,9 @@
-CREATE TABLE categories (
+CREATE TABLE IF NOT EXISTS categories (
     id INTEGER PRIMARY KEY,
     name TEXT NOT NULL
 );
 
-CREATE TABLE locations (
+CREATE TABLE IF NOT EXISTS locations (
     id INTEGER PRIMARY KEY,
     room_name TEXT NOT NULL
 );
