@@ -1,17 +1,17 @@
-import sqlite3
+import os
+from dotenv import load_dotenv
+import psycopg
 
-connection = sqlite3.connect("inventory.db")
-cursor = connection.cursor()
+load_dotenv()
 
-with open("schema.sql", "r") as file:
-    sql_script = file.read()
-
-cursor.executescript(sql_script)
-
-cursor.execute(
-    "INSERT INTO categories (name) VALUES (?)",
-    ("Electronics",)
+connection = psycopg.connect(
+    host=os.getenv("DB_HOST"),
+    dbname=os.getenv("DB_NAME"),
+    user=os.getenv("DB_USER"),
+    password=os.getenv("DB_PASSWORD"),
+    port=int(os.getenv("DB_PORT")),
+    sslmode="require"
 )
 
-connection.commit()
-connection.close()
+cursor = connection.cursor()
+print("Connected successfully!")
