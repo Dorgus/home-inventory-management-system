@@ -10,7 +10,7 @@ try:
         dbname=os.getenv("DB_NAME"),
         user=os.getenv("DB_USER"),
         password=os.getenv("DB_PASSWORD"),
-        port=int(os.getenv("DB_PORT")),
+        port=int(os.getenv("DB_PORT", 5432)),
         sslmode="require"
     )
 
@@ -18,7 +18,10 @@ try:
 
     # Execute schema.sql
     with open("schema.sql", "r") as file:
-        cursor.execute(file.read())
+     for statement in file.read().split(";"):
+        stmt = statement.strip()
+        if stmt:
+            cursor.execute(stmt)
 
     # Insert categories
     cursor.execute("""
