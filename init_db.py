@@ -18,10 +18,10 @@ try:
 
     # Execute schema.sql
     with open("schema.sql", "r") as file:
-     for statement in file.read().split(";"):
-        stmt = statement.strip()
-        if stmt:
-            cursor.execute(stmt)
+        for statement in file.read().split(";"):
+            stmt = statement.strip()
+            if stmt:
+                cursor.execute(stmt)
 
     # Insert categories
     cursor.execute("""
