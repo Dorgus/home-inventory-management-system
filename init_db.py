@@ -43,6 +43,16 @@ try:
         ON CONFLICT (name) DO NOTHING;
     """)
 
+    # Insert Items
+    cursor.execute("""
+        INSERT INTO items (name, quantity, category_id, location_id)
+        VALUES
+        ('Laptop', 2, 1, 1),
+        ('Chair', 4, 2, 3),
+        ('Pan', 5, 3, 2)
+        ON CONFLICT DO NOTHING;
+    """)
+
     connection.commit()
     print("Database initialized successfully!")
 
@@ -54,3 +64,4 @@ finally:
         cursor.close()
     if 'connection' in locals():
         connection.close()
+
