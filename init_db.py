@@ -45,12 +45,27 @@ try:
 
     # Insert Items
     cursor.execute("""
-        INSERT INTO items (name, quantity, category_id, location_id)
-        VALUES
-        ('Laptop', 2, 1, 1),
-        ('Chair', 4, 2, 3),
-        ('Pan', 5, 3, 2)
-        ON CONFLICT DO NOTHING;
+    INSERT INTO items (name, quantity, category_id, location_id)
+    VALUES
+    (
+        'Laptop',
+        2,
+        (SELECT id FROM categories WHERE name = 'Electronics'),
+        (SELECT id FROM locations WHERE name = 'Bedroom')
+    ),
+    (
+        'Chair',
+        4,
+        (SELECT id FROM categories WHERE name = 'Furniture'),
+        (SELECT id FROM locations WHERE name = 'Living Room')
+    ),
+    (
+        'Pan',
+        5,
+        (SELECT id FROM categories WHERE name = 'Kitchen'),
+        (SELECT id FROM locations WHERE name = 'Kitchen')
+    )
+    ON CONFLICT (name, category_id, location_id) DO NOTHING;
     """)
 
     connection.commit()
@@ -64,4 +79,3 @@ finally:
         cursor.close()
     if 'connection' in locals():
         connection.close()
-
